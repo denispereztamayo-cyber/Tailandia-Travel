@@ -3,24 +3,24 @@ import { SYSTEM_INSTRUCTION } from "../constants.ts";
 
 let chatSession: Chat | null = null;
 
+/**
+ * Obtiene el cliente de IA utilizando la clave de API autorizada por el usuario.
+ */
 const getAIClient = () => {
-  // Verificación segura para evitar ReferenceError en el navegador
-  const apiKey = typeof process !== 'undefined' ? process.env.API_KEY : undefined;
-  
-  if (!apiKey) {
-    console.error("Critical Error: API_KEY is not defined in environment variables. Please set it in your hosting provider (e.g. Vercel Dashboard).");
-    return null;
-  }
-  
+  // Clave de API integrada directamente para el plan gratuito y despliegue rápido
+  const apiKey = "AIzaSyAqoKAr1ei1tJoqnlBVcKIzdEALV2JhLNw";
   return new GoogleGenAI({ apiKey });
 };
 
+/**
+ * Inicializa o recupera la sesión de chat. 
+ * Mantiene el contexto de la conversación.
+ */
 export const getChatSession = (): Chat | null => {
   if (chatSession) return chatSession;
 
   const ai = getAIClient();
-  if (!ai) return null;
-
+  
   try {
     chatSession = ai.chats.create({
       model: 'gemini-3-flash-preview',
@@ -31,23 +31,26 @@ export const getChatSession = (): Chat | null => {
     });
     return chatSession;
   } catch (error) {
-    console.error("Failed to initialize chat session:", error);
+    console.error("Error al inicializar Chang AI:", error);
     return null;
   }
 };
 
+/**
+ * Envía el mensaje del usuario a la IA y devuelve la respuesta generada.
+ */
 export const sendMessageToGemini = async (message: string): Promise<string> => {
   const chat = getChatSession();
   
   if (!chat) {
-    return "Lo siento, la configuración del chat no está completa. Por favor, asegúrate de que la API Key esté configurada en el panel de Vercel.";
+    return "Sawasdee khrap, parece que tengo un pequeño problema de conexión. ¿Podrías intentar de nuevo?";
   }
 
   try {
     const response = await chat.sendMessage({ message });
-    return response.text || "No recibí una respuesta clara. Por favor, intenta de nuevo.";
+    return response.text || "He recibido tu mensaje pero no he podido generar una respuesta clara. ¿Deseas preguntar sobre otro destino?";
   } catch (error) {
-    console.error("Error communicating with Gemini AI:", error);
-    return "He tenido un pequeño problema técnico conectando con mi base de conocimientos. ¿Podrías intentar preguntarme de nuevo en unos segundos?";
+    console.error("Error de comunicación con Gemini:", error);
+    return "He tenido un tropiezo técnico conectando con mi guía de viaje. ¡Por favor, intenta de nuevo en unos segundos!";
   }
 };
