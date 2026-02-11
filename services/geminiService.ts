@@ -4,17 +4,17 @@ import { SYSTEM_INSTRUCTION } from "../constants.ts";
 let chatSession: Chat | null = null;
 
 const getAIClient = () => {
-  if (!process.env.API_KEY) {
-    console.warn("API_KEY is missing from environment variables.");
+  // Verificación segura para evitar ReferenceError en el navegador
+  const apiKey = typeof process !== 'undefined' ? process.env.API_KEY : undefined;
+  
+  if (!apiKey) {
+    console.error("Critical Error: API_KEY is not defined in environment variables. Please set it in your hosting provider (e.g. Vercel Dashboard).");
     return null;
   }
-  return new GoogleGenAI({ apiKey: process.env.API_KEY });
+  
+  return new GoogleGenAI({ apiKey });
 };
 
-/**
- * Initializes or retrieves the existing chat session.
- * This ensures conversation history is maintained during the user's session.
- */
 export const getChatSession = (): Chat | null => {
   if (chatSession) return chatSession;
 
@@ -31,26 +31,23 @@ export const getChatSession = (): Chat | null => {
     });
     return chatSession;
   } catch (error) {
-    console.error("Failed to create chat session:", error);
+    console.error("Failed to initialize chat session:", error);
     return null;
   }
 };
 
-/**
- * Sends a message to the Gemini AI and returns the text response.
- */
 export const sendMessageToGemini = async (message: string): Promise<string> => {
   const chat = getChatSession();
   
   if (!chat) {
-    return "I'm sorry, I cannot connect to the AI service at the moment. Please check your API key configuration.";
+    return "Lo siento, la configuración del chat no está completa. Por favor, asegúrate de que la API Key esté configurada en el panel de Vercel.";
   }
 
   try {
     const response = await chat.sendMessage({ message });
-    return response.text || "I didn't receive a response. Please try again.";
+    return response.text || "No recibí una respuesta clara. Por favor, intenta de nuevo.";
   } catch (error) {
-    console.error("Error communicating with Gemini:", error);
-    return "I'm having a little trouble connecting to the spirits of travel right now. Please try again in a moment.";
+    console.error("Error communicating with Gemini AI:", error);
+    return "He tenido un pequeño problema técnico conectando con mi base de conocimientos. ¿Podrías intentar preguntarme de nuevo en unos segundos?";
   }
 };
