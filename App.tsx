@@ -1,11 +1,11 @@
 import React from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import DestinationCard from './components/DestinationCard';
-import ChatWidget from './components/ChatWidget';
-import Footer from './components/Footer';
-import { DESTINATIONS, REVIEWS } from './constants';
-import { Star, Sparkles } from './components/Icon';
+import Header from './components/Header.tsx';
+import Hero from './components/Hero.tsx';
+import DestinationCard from './components/DestinationCard.tsx';
+import ChatWidget from './components/ChatWidget.tsx';
+import Footer from './components/Footer.tsx';
+import { DESTINATIONS, REVIEWS } from './constants.ts';
+import { Star, Sparkles } from './components/Icon.tsx';
 
 const App: React.FC = () => {
   return (

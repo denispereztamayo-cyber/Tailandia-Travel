@@ -1,6 +1,6 @@
 import React from 'react';
-import { Compass } from './Icon';
-import { APP_NAME } from '../constants';
+import { Compass } from './Icon.tsx';
+import { APP_NAME } from '../constants.ts';
 
 const Footer: React.FC = () => {
   return (

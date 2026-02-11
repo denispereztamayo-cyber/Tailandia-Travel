@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Sparkles } from './Icon';
+import { ArrowRight, Sparkles } from './Icon.tsx';
 
 const Hero: React.FC = () => {
   return (

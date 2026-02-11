@@ -1,6 +1,6 @@
 import React from 'react';
-import { MapPin, Star } from './Icon';
-import { Destination } from '../types';
+import { MapPin, Star } from './Icon.tsx';
+import { Destination } from '../types.ts';
 
 interface DestinationCardProps {
   destination: Destination;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Compass } from './Icon';
-import { APP_NAME } from '../constants';
+import { Menu, X, Compass } from './Icon.tsx';
+import { APP_NAME } from '../constants.ts';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);

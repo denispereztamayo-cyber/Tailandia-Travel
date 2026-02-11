@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Sparkles, Info } from './Icon';
-import { sendMessageToGemini } from '../services/geminiService';
-import { ChatMessage } from '../types';
+import { MessageCircle, X, Send, Sparkles, Info } from './Icon.tsx';
+import { sendMessageToGemini } from '../services/geminiService.ts';
+import { ChatMessage } from '../types.ts';
 
 const ChatWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
